@@ -1,6 +1,6 @@
 body{
-   background-color: #000000 !important;
-    color: #ffffff !important;
+   background-color: #f8f9fa !important; /* or #ffffff for crisp white */
+    color: #222222 !important;
  font-family: "Plus Jakarta Sans", sans-serif !important;
  display: flex;
  flex-direction: column;
@@ -83,9 +83,8 @@ body{
 }
 
 .card {
-    background-color: #000000!important; /* A slightly lighter black for contrast */
-    color: #ffffff !important;
-    border: 1px solid #000000 !important; /* Subtle dark grey border */
+    background-color: #f8f9fa !important; /* or #ffffff for crisp white */
+    color: #222222 !important;
 }
 
 

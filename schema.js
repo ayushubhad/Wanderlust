@@ -11,7 +11,7 @@ const listingSchema = Joi.object({
         image: Joi.object({
             url: Joi.string().allow("", null)
         }),
-        category: Joi.string().valid("Trending", "Rooms", "Iconic Cities", "Mountains", "Castles", "Pools", "Camping", "Farms", "Arctic","Beach", "Vineyards", "Kitchen", "GameHub", "Nature", "Business", "Vacation", "Music").required()
+        category: Joi.string().valid("Trending", "Rooms", "Iconic Cities", "Mountains", "Castles", "Pools", "Camping", "Farms", "Arctic","Beach", "Vineyards", "Kitchen", "GameHub", "Nature", "Business", "Vacation", "Music").allow("", null).optional().required()
     }).required()
 });
 

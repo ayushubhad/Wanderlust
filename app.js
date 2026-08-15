@@ -5,7 +5,8 @@ console.log(process.env.secret)
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const app = express();
-const  mongo_URL= "mongodb://127.0.0.1:27017/Tourism";
+//const  mongo_URL= "mongodb://127.0.0.1:27017/Tourism";
+const dbUrl = process.env.ATLAS_DB_URL;
 const path = require("path");
 app.use(express.urlencoded({ extended: true }));
 const methodOverride= require("method-override");
@@ -82,7 +83,8 @@ main().then(()=>{console.log("connected to DB")})
     console.log(err);
 })
 async function main() {
-    await mongoose.connect(mongo_URL);
+    //const dbUrl = mongodb+srv://AyushUbhad:newUserPass@cluster0.uax1brh.mongodb.net/?appName=Cluster0 ;
+    await mongoose.connect(dbUrl);
    
 }
 
