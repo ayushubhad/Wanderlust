@@ -5,7 +5,7 @@ const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res) => {
     const { category } = req.query; // Grab the category from the URL string
-    console.log("Requested category", category);
+    
     let allListings;
     if (category) {
        
