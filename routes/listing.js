@@ -15,7 +15,7 @@ router.route("/")
 .get(wrapAsync(listingController.index))
 .post(isLoggedIn,upload.single("listing[image]"),validateListing,wrapAsync(listingController.createListing ))
 
-
+router.get("/suggest", wrapAsync(listingController.suggestListings));
 
 router.route("/:id")
 .get( wrapAsync(listingController.showListing))

@@ -1,91 +1,173 @@
 <% layout("/layouts/boilerplate") %>
-<body>
-    <div class="row mt-3">
-        <div class="col-8 offset-2" >
 
-        
-    <h3>Edit Listing</h3>
-    <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" novalidate class="needs-validation"
-        enctype="multipart/form-data">
-       <div>
-        <label for="title" class="form-label">Title</label>
-         <input type="text" name="listing[title]" value="<%=listing.title  %>" class="form-control" required>
-         <div class="valid-feedback">
-            Title looks great!
-        </div>
-        <div class="invalid-feedback">
-                Enter a valid title.
-            </div>
-            <br>
-       </div>
-        <div>
-            <label for="description" class="form-label">Description</label>
-            <textarea type="text" class="form-control"  name="listing[description]" required><%=listing.description  %></textarea>
-            <div class="valid-feedback">
-            Description looks great!
-        </div>
-        <div class="invalid-feedback">
-                Enter a valid description.
-            </div>
-            <br>
-        </div>
-      <div>
-        <div class="mb-3">
-            Original Listing Image <br>
-            <img src="<%= originalImageUrl %>" >
-        </div>
-         <label for="image" class="form-label">Upload New Image</label>
-          <input type="file" class="form-control" name="listing[image]" >
-          <div class="valid-feedback">
-            Image looks great!
-        </div>
+<div class="noir-form-card">
+  
+  <div class="noir-form-badge">
+    <i class="fa-solid fa-pen-to-square"></i> Modify Details
+  </div>
+  
+  <h1 class="noir-form-title">Edit Listing</h1>
+  <p class="noir-form-subtitle">Update pricing, description, location, or upload a replacement cover photo.</p>
 
-            <br>
+  <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+    
+    <!-- Title -->
+    <div class="noir-form-group">
+      <label for="title" class="noir-label">Listing Title</label>
+      <input 
+        type="text" 
+        id="title" 
+        name="listing[title]" 
+        value="<%= listing.title %>" 
+        class="noir-input" 
+        required 
+      />
+      <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Title is required.</div>
+    </div>
+
+    <!-- Description -->
+    <div class="noir-form-group">
+      <label for="description" class="noir-label">Description</label>
+      <textarea 
+        id="description" 
+        name="listing[description]" 
+        rows="5" 
+        class="noir-textarea" 
+        required
+      ><%= listing.description %></textarea>
+      <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Description is required.</div>
+    </div>
+
+    <!-- Current Photo & Upload Replacement -->
+    <div class="noir-form-group">
+      <label class="noir-label">Current Photo</label>
+      <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem;">
+        <img 
+          src="<%= originalImageUrl || listing.image.url %>" 
+          alt="Current cover" 
+          style="width: 140px; height: 95px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);"
+        />
+        <div style="font-size: 0.85rem; color: var(--text-secondary);">
+          Upload a new photo below if you wish to change the cover image.
+        </div>
       </div>
-      <div class="row">
-           <div class="col-md-4">
-        <label for="price" class="form-label">Enter Price</label>
-         <input type="number" class="form-control" name="listing[price]"  value="<%=listing.price  %>" required >
-         <div class="valid-feedback">
-            Price looks great!
+
+      <label class="noir-label">Upload New Cover Photo (Optional)</label>
+      <div class="noir-dropzone" id="dropzone">
+        <input 
+          type="file" 
+          id="image-input" 
+          name="listing[image]" 
+          class="noir-dropzone-input" 
+          accept="image/*" 
+        />
+        <div style="font-size: 2rem; color: var(--text-primary); margin-bottom: 0.5rem;">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
         </div>
-        <div class="invalid-feedback">
-                Enter a valid price.
-            </div>
-            <br>
-       </div>
-        <div class="col-md-8">
-             <label for="country" class="form-label">Enter Country</label>
-            <input type="text" class="form-control" name="listing[country]" value="<%=listing.country  %>" required>
-            <div class="valid-feedback">
-            Country looks great!
-        </div>
-        <div class="invalid-feedback">
-                Enter a valid country.
-            </div>
-            <br>
-        </div>
-       <div>
+        <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-primary);">Click or drag image file here</div>
+        <div style="font-size: 0.775rem; color: var(--text-muted); margin-top: 0.25rem;">Supports JPG, PNG, WEBP</div>
       </div>
-       <div class="col-md-8">
-        <label for="location" class="form-label">Enter Location</label>
-         <input type="text" class="form-control" name="listing[location]" value="<%=listing.location  %>" required>
-         <div class="valid-feedback">
-            Location looks great!
-        </div>
-        <div class="invalid-feedback">
-                Enter a valid location.
-            </div>
-        </div>    
+      <div id="image-preview" class="noir-preview-box d-none">
+        <img id="preview-img" src="#" alt="New Preview" />
+      </div>
+    </div>
 
+    <!-- Pricing & Location -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div class="noir-form-group">
+        <label for="price" class="noir-label">Price per Night (&#8377;)</label>
+        <input 
+          type="number" 
+          id="price" 
+          name="listing[price]" 
+          value="<%= listing.price %>" 
+          min="0" 
+          class="noir-input" 
+          required 
+        />
+        <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Price is required.</div>
+      </div>
 
-            <br>
-       </div>
-        <button class="btn btn-dark edit-btn mt-3 mb-4">Edit</button>
-    </form>
-   
-</body>
-</html>
+      <div class="noir-form-group">
+        <label for="country" class="noir-label">Country</label>
+        <input 
+          type="text" 
+          id="country" 
+          name="listing[country]" 
+          value="<%= listing.country %>" 
+          class="noir-input" 
+          required 
+        />
+        <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Country is required.</div>
+      </div>
+    </div>
+
+    <div class="noir-form-group">
+      <label for="location" class="noir-label">City / Location</label>
+      <input 
+        type="text" 
+        id="location" 
+        name="listing[location]" 
+        value="<%= listing.location %>" 
+        class="noir-input" 
+        required 
+      />
+      <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Location is required.</div>
+    </div>
+
+    <!-- Category Selector -->
+    <div class="noir-form-group">
+      <label class="noir-label">Category</label>
+      <div class="noir-category-grid">
+        <% 
+          const categories = [
+            { name: "Trending", icon: "fa-fire" },
+            { name: "Rooms", icon: "fa-bed" },
+            { name: "Iconic Cities", icon: "fa-mountain-city" },
+            { name: "Mountains", icon: "fa-mountain" },
+            { name: "Castles", icon: "fa-fort-awesome", brand: true },
+            { name: "Pools", icon: "fa-person-swimming" },
+            { name: "Camping", icon: "fa-tent" },
+            { name: "Farms", icon: "fa-tractor" },
+            { name: "Arctic", icon: "fa-snowflake" },
+            { name: "Beach", icon: "fa-umbrella-beach" },
+            { name: "Vineyards", icon: "fa-wine-bottle" },
+            { name: "Kitchen", icon: "fa-kitchen-set" },
+            { name: "GameHub", icon: "fa-gamepad" },
+            { name: "Nature", icon: "fa-leaf" },
+            { name: "Business", icon: "fa-briefcase" },
+            { name: "Vacation", icon: "fa-umbrella" },
+            { name: "Music", icon: "fa-music" }
+          ];
+        %>
+        <% for (let cat of categories) { %>
+          <div>
+            <input 
+              type="radio" 
+              id="cat-<%= cat.name.toLowerCase().replace(/ /g, '-') %>" 
+              name="listing[category]" 
+              value="<%= cat.name %>" 
+              class="noir-radio-input" 
+              <%= (listing.category === cat.name || (cat.name === 'Rooms' && !listing.category)) ? 'checked' : '' %> 
+            />
+            <label for="cat-<%= cat.name.toLowerCase().replace(/ /g, '-') %>" class="noir-radio-label">
+              <i class="<%= cat.brand ? 'fa-brands' : 'fa-solid' %> <%= cat.icon %>"></i>
+              <span><%= cat.name %></span>
+            </label>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+      <a href="/listings/<%= listing._id %>" class="btn-noir-outline">Cancel</a>
+      <button type="submit" class="btn-noir-primary" style="padding: 0.85rem 2rem;">
+        <i class="fa-solid fa-check"></i>
+        <span>Save Changes</span>
+      </button>
+    </div>
+
+  </form>
 
 </div>
-    </div>

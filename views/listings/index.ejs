@@ -1,174 +1,131 @@
 <% layout("/layouts/boilerplate") %>
 
-<body>
-   <!--  <h1>All listings</h1>
-    <form action="/listings/new" method="GET">
-       <button>Create new Listing</button>  -->
-
-  <style>
-    #filters {
-        display: flex;
-        flex-wrap: nowrap; /* Prevents wrapping to the next line */
-        overflow-x: auto;  /* Enables horizontal scrolling */
-        align-items: center;
-        gap: 2rem;
-        padding: 1rem 0;
-        margin-top: 1rem;
-        /* Hides scrollbar for Firefox */
-        scrollbar-width: none; 
-    }
-
-    /* Hides scrollbar for Chrome, Safari and Opera */
-    #filters::-webkit-scrollbar {
-        display: none;
-    }
-
-    .filter-item {
-        text-align: center;
-        opacity: 0.7;
-        text-decoration: none;
-        color: inherit;
-        transition: 0.2s ease;
-        flex: 0 0 auto; /* Ensures items don't shrink */
-    }
-
-    .filter-item:hover {
-        opacity: 1;
-        cursor: pointer;
-        border-bottom: 2px solid black;
-    }
-
-    .filter-item p {
-        font-size: 0.8rem;
-        margin-top: 0.5rem;
-    }
-    
-    .filter {
-    flex: 0 0 auto; /* Ensures the wrapper divs don't shrink */
-}
-</style>
-
-    <div id="filters">
-       <div class="filter">
-        <a href="/listings?category=Trending" class="filter-item">
-        <div><i class="fa-solid fa-fire"></i></div>
-        <p>Trending</p></a>
-       </div>
-   
-       <div class="filter">
-        <a href="/listings?category=Rooms" class="filter-item">
-        <div><i class="fa-solid fa-couch"></i></div>
-        <p>Rooms</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Iconic-Cities" class="filter-item">
-        <div><i class="fa-solid fa-mountain-city"></i></div>
-        <p>Iconic Cities</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Mountains" class="filter-item">
-        <div><i class="fa-solid fa-mountain"></i></div>
-        <p>Mountains</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Castles" class="filter-item">
-        <div><i class="fa-brands fa-fort-awesome"></i></div>
-        <p>Castles</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Pool" class="filter-item">
-        <div><i class="fa-solid fa-person-swimming"></i></div>
-        <p>Pool</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Camping" class="filter-item">
-        <div><i class="fa-solid fa-tent"></i></div>
-        <p>Camping</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Farms" class="filter-item">
-        <div><i class="fa-solid fa-tractor"></i></div>
-        <p>Farms</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Arctic" class="filter-item">
-        <div><i class="fa-solid fa-snowflake"></i></div>
-        <p>Arctic</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Beach" class="filter-item">
-        <div><i class="fa-solid fa-umbrella-beach"></i></div>
-        <p>Beach</p></a>
-       </div>
-
-       
-
-       <div class="filter"><a href="/listings?category=Vineyards" class="filter-item">
-        <div><i class="fa-solid fa-wine-bottle"></i></div>
-        <p>Vineyards</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Kitchen" class="filter-item">
-        <div><i class="fa-solid fa-kitchen-set"></i></div>
-        <p>Kitchen</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=GameHUb" class="filter-item">
-        <div><i class="fa-solid fa-football"></i></div>
-        <p>GameHub</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Nature" class="filter-item">
-        <div><i class="fa-solid fa-leaf"></i></div>
-        <p>Nature</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Business" class="filter-item">
-        <div><i class="fa-brands fa-black-tie"></i></div>
-        <p>Business</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Vacation" class="filter-item">
-        <div><i class="fa-solid fa-suitcase-rolling"></i></div>
-        <p>Vacation</p></a>
-       </div>
-
-       <div class="filter"><a href="/listings?category=Music" class="filter-item">
-        <div><i class="fa-solid fa-guitar"></i></div>
-        <p>Music</p></a>
-       </div>
-       
-
+<!-- Category Navigation Bar -->
+<section class="noir-category-section">
+  <div class="noir-category-container">
+    <div class="noir-category-track" id="categories-track">
+      <a href="/listings" class="noir-category-btn" data-category="All">
+        <i class="fa-solid fa-earth-americas"></i>
+        <span>All Escapes</span>
+      </a>
+      <a href="/listings?category=Trending" class="noir-category-btn" data-category="Trending">
+        <i class="fa-solid fa-fire"></i>
+        <span>Trending</span>
+      </a>
+      <a href="/listings?category=Rooms" class="noir-category-btn" data-category="Rooms">
+        <i class="fa-solid fa-bed"></i>
+        <span>Rooms</span>
+      </a>
+      <a href="/listings?category=Iconic-Cities" class="noir-category-btn" data-category="Iconic Cities">
+        <i class="fa-solid fa-mountain-city"></i>
+        <span>Iconic Cities</span>
+      </a>
+      <a href="/listings?category=Mountains" class="noir-category-btn" data-category="Mountains">
+        <i class="fa-solid fa-mountain"></i>
+        <span>Mountains</span>
+      </a>
+      <a href="/listings?category=Castles" class="noir-category-btn" data-category="Castles">
+        <i class="fa-brands fa-fort-awesome"></i>
+        <span>Castles</span>
+      </a>
+      <a href="/listings?category=Pools" class="noir-category-btn" data-category="Pools">
+        <i class="fa-solid fa-person-swimming"></i>
+        <span>Pools</span>
+      </a>
+      <a href="/listings?category=Camping" class="noir-category-btn" data-category="Camping">
+        <i class="fa-solid fa-tent"></i>
+        <span>Camping</span>
+      </a>
+      <a href="/listings?category=Farms" class="noir-category-btn" data-category="Farms">
+        <i class="fa-solid fa-tractor"></i>
+        <span>Farms</span>
+      </a>
+      <a href="/listings?category=Arctic" class="noir-category-btn" data-category="Arctic">
+        <i class="fa-solid fa-snowflake"></i>
+        <span>Arctic</span>
+      </a>
+      <a href="/listings?category=Beach" class="noir-category-btn" data-category="Beach">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <span>Beachfront</span>
+      </a>
+      <a href="/listings?category=Vineyards" class="noir-category-btn" data-category="Vineyards">
+        <i class="fa-solid fa-wine-bottle"></i>
+        <span>Vineyards</span>
+      </a>
+      <a href="/listings?category=Kitchen" class="noir-category-btn" data-category="Kitchen">
+        <i class="fa-solid fa-kitchen-set"></i>
+        <span>Kitchen</span>
+      </a>
+      <a href="/listings?category=GameHub" class="noir-category-btn" data-category="GameHub">
+        <i class="fa-solid fa-gamepad"></i>
+        <span>GameHub</span>
+      </a>
+      <a href="/listings?category=Nature" class="noir-category-btn" data-category="Nature">
+        <i class="fa-solid fa-leaf"></i>
+        <span>Nature</span>
+      </a>
+      <a href="/listings?category=Business" class="noir-category-btn" data-category="Business">
+        <i class="fa-solid fa-briefcase"></i>
+        <span>Business</span>
+      </a>
+      <a href="/listings?category=Vacation" class="noir-category-btn" data-category="Vacation">
+        <i class="fa-solid fa-umbrella"></i>
+        <span>Vacation</span>
+      </a>
+      <a href="/listings?category=Music" class="noir-category-btn" data-category="Music">
+        <i class="fa-solid fa-music"></i>
+        <span>Music</span>
+      </a>
     </div>
-    
+  </div>
+</section>
 
+<!-- Dynamic Listings Grid -->
+<div class="noir-listings-grid">
+  <% if (allListings && allListings.length > 0) { %>
+    <% for (let listing of allListings) { %>
+      <a href="/listings/<%= listing._id %>" class="noir-card">
+        
+        <div class="noir-card-media">
+          <% if (listing.category) { %>
+            <span class="noir-card-category-tag"><%= listing.category %></span>
+          <% } %>
+          
+          <img 
+            src="<%= listing.image && listing.image.url ? listing.image.url : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=75' %>" 
+            alt="<%= listing.title %>" 
+            class="noir-card-img"
+            loading="lazy"
+          />
+        </div>
 
-    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-1 mt-3">
-  <% for (let listing of allListings) { %>
-    
-    <div class="card listing-card h-100 col mb-4">
-      
-      <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem; object-fit: cover;">
-      
-      <div class="card-img-overlay">
-        .
-      </div>
+        <div class="noir-card-body">
+          <div class="noir-card-header-row">
+            <div class="noir-card-location"><%= listing.location %>, <%= listing.country %></div>
+            <div class="noir-card-rating">
+              <i class="fa-solid fa-star"></i>
+              <span><%= (4.7 + (listing.title.length % 4) * 0.08).toFixed(2) %></span>
+            </div>
+          </div>
 
-      <div class="card-body">
-        <p class="card-text">
-          <b><%= listing.title %></b>
-          <br>
-          &#8377; <%= listing.price?.toLocaleString("en-IN") %>/night
-        </p>
-      </div>
+          <div class="noir-card-title"><%= listing.title %></div>
 
-      <a href="/listings/<%= listing._id %>" class="stretched-link"></a>
+          <div class="noir-card-price-row">
+            <span class="noir-card-price">&#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : "0" %></span>
+            <span class="noir-card-unit">/ night</span>
+          </div>
+        </div>
 
+      </a>
+    <% } %>
+  <% } else { %>
+    <div style="grid-column: 1 / -1; text-align: center; padding: 5rem 2rem; background: var(--bg-surface); border-radius: var(--radius-md); border: 1px dashed var(--border-medium);">
+      <i class="fa-solid fa-compass" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+      <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">No escapes found</h3>
+      <p style="font-size: 0.9rem; color: var(--text-secondary); max-width: 400px; margin: 0 auto 1.5rem auto;">There are currently no listings matching this filter. Explore all retreats in our collection.</p>
+      <a href="/listings" class="btn-noir-primary">
+        <span>View All Escapes</span>
+      </a>
     </div>
-
   <% } %>
 </div>
-
-  
-
-

@@ -1,8 +1,31 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row">
-    <div class="alert alert-danger col-6 offset-3" role="alert">
-  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-   <h4 class="alert-heading"><%= err.message %></h4>
-   <p><%= err.trace %></p>
-</div>
+
+<div style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 16rem); padding: 3rem 1.5rem; text-align: center;">
+  <div style="max-width: 520px; background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); box-shadow: var(--shadow-lg); padding: 3rem 2rem;">
+    
+    <div style="font-size: 4rem; font-weight: 900; letter-spacing: -0.04em; color: var(--text-primary); line-height: 1; margin-bottom: 1rem;">
+      <%= (typeof err !== 'undefined' && err.statusCode) ? err.statusCode : '404' %>
+    </div>
+
+    <h1 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.75rem;">
+      <%= (typeof err !== 'undefined' && err.message) ? err.message : 'Page Not Found' %>
+    </h1>
+
+    <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 2rem;">
+      The retreat or page you are searching for does not exist or may have been relocated.
+    </p>
+
+    <a href="/listings" class="btn-noir-primary">
+      <i class="fa-solid fa-compass"></i>
+      <span>Return to Stays</span>
+    </a>
+
+    <% if (typeof err !== 'undefined' && err.stack && process.env.NODE_ENV !== 'production') { %>
+      <details style="margin-top: 2rem; text-align: left; background: var(--bg-input); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--color-error); border: 1px solid var(--border-subtle); overflow-x: auto;">
+        <summary style="cursor: pointer; font-weight: 700; color: var(--text-secondary);">Debug Stack Trace</summary>
+        <pre style="margin-top: 0.75rem;"><%= err.stack %></pre>
+      </details>
+    <% } %>
+
+  </div>
 </div>

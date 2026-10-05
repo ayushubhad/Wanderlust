@@ -116,3 +116,25 @@ module.exports.deletelisting = async (req,res)=>{
     req.flash("success", " Listing Deleted!");
     res.redirect("/listings");
 }
+
+//search suggestiions
+module.exports.suggestListings = async (req, res) => {
+    let { q } = req.query;
+    if (!q || q.trim() === "") {
+        return res.json([]);
+    }
+
+    let regex = new RegExp(q.trim(), "i");
+    let allSuggestions = await Listing.find({
+        $or: [
+            { title: regex },
+            { location: regex },
+            { country: regex },
+            { category: regex }
+        ]
+    })
+    .select("_id title location country price image.url")
+    .limit(6);
+
+    res.json(allSuggestions);
+};

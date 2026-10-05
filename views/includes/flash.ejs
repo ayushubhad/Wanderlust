@@ -1,14 +1,29 @@
+<% if ((success && success.length > 0) || (error && error.length > 0)) { %>
+  <div class="noir-toast-container" id="toast-container" aria-live="polite">
+    <% if (success && success.length > 0) { %>
+      <div class="noir-toast-item toast-success" role="alert">
+        <i class="fa-solid fa-circle-check" style="color: var(--color-success); font-size: 1.15rem; margin-top: 0.1rem;"></i>
+        <div style="flex: 1;">
+          <div style="font-weight: 700; font-size: 0.875rem; color: var(--text-primary);">Success</div>
+          <div style="font-size: 0.825rem; color: var(--text-secondary);"><%= success %></div>
+        </div>
+        <button type="button" onclick="this.parentElement.remove()" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer;" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    <% } %>
 
-<% if(success && success.length){ %>
-<div class="alert alert-success aler-dismissible fade show" role="alert">
-  <%= success %>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
-</div>
-<% } %>
-
-<% if(error && error.length){ %>
-<div class="alert alert-danger aler-dismissible fade show" role="alert">
-  <%= error %>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
-</div>
+    <% if (error && error.length > 0) { %>
+      <div class="noir-toast-item toast-error" role="alert">
+        <i class="fa-solid fa-circle-exclamation" style="color: var(--color-error); font-size: 1.15rem; margin-top: 0.1rem;"></i>
+        <div style="flex: 1;">
+          <div style="font-weight: 700; font-size: 0.875rem; color: var(--text-primary);">Notice</div>
+          <div style="font-size: 0.825rem; color: var(--text-secondary);"><%= error %></div>
+        </div>
+        <button type="button" onclick="this.parentElement.remove()" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer;" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    <% } %>
+  </div>
 <% } %>

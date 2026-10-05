@@ -1,98 +1,262 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row mt-3">
-    <div class="col-8 offset-2" >
-<body>
-    <br><br>
-    <h3>Create a new Listing</h3>
-    <form action="/listings" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
-       <div>
-         <label for="title" class="form-label">Title</label>
-        <input type="text" name="listing[title]" placeholder="enter title" class="form-control" required>
-        <div class="valid-feedback">
-            Title looks great!
+
+<div class="noir-form-card">
+  
+  <div class="noir-form-badge">
+    <i class="fa-solid fa-plus"></i> New Retreat
+  </div>
+  
+  <h1 class="noir-form-title">Create an Escape</h1>
+  <p class="noir-form-subtitle">List your architectural stay or nature sanctuary on Wanderlust.</p>
+
+  <form action="/listings" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+    
+    <!-- Title -->
+    <div class="noir-form-group">
+      <label for="title" class="noir-label">Listing Title</label>
+      <input 
+        type="text" 
+        id="title" 
+        name="listing[title]" 
+        placeholder="e.g. Minimalist Concrete Villa with Panoramic Ocean Views" 
+        class="noir-input" 
+        required 
+      />
+      <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Please provide a title.</div>
+    </div>
+
+    <!-- Description -->
+    <div class="noir-form-group">
+      <label for="description" class="noir-label">Description</label>
+      <textarea 
+        id="description" 
+        name="listing[description]" 
+        rows="5" 
+        placeholder="Detail the architecture, environment, landscape, amenities, and retreat experience..." 
+        class="noir-textarea" 
+        required
+      ></textarea>
+      <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Please write a description.</div>
+    </div>
+
+    <!-- Media Dropzone -->
+    <div class="noir-form-group">
+      <label class="noir-label">Property Cover Photo</label>
+      <div class="noir-dropzone" id="dropzone">
+        <input 
+          type="file" 
+          id="image-input" 
+          name="listing[image]" 
+          class="noir-dropzone-input" 
+          accept="image/*" 
+        />
+        <div style="font-size: 2rem; color: var(--text-primary); margin-bottom: 0.5rem;">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
         </div>
-        <div class="invalid-feedback">
-                Enter a valid title.
-            </div><br>
-       </div>
-       <div>
-        <label for="description" class="form-label">Description</label>
-         <textarea type="text" name="listing[description]" placeholder="Enter Description" class="form-control" required></textarea>
-         
-         <div class="valid-feedback">
-                Description looks good!
-            </div>
-            <div class="invalid-feedback">
-            Enter a valid Description.
-        </div><br>
-       </div>
-        <div>
-            <label for="image" class="form-label">Upload Image</label>
-            <input type="file" name="listing[image]" placeholder="Enter image URL/link" class="form-control">
-            required
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-            <label for="price" class="form-label">Price</label>
-            <input type="number" name="listing[price]"placeholder="enter Price" class="form-control" required>
-            <div class="valid-feedback">
-                Price looks good!
-            </div>
-            <div class="invalid-feedback">
-            Enter a valid price.
-        </div><br>
-        </div>
-        <div class="col-md-8">
-            <label for="country" class="form-label">Country</label>
-            <input type="text" name="listing[country]" placeholder="Enter Country" class="form-control" required>
-            <div class="valid-feedback">
-                Country looks good!
-            </div>
-            <div class="invalid-feedback">
-            Enter a valid country.
-        </div><br>
-        </div>
-        </div>
+        <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-primary);">Click or drag image file here to upload</div>
+        <div style="font-size: 0.775rem; color: var(--text-muted); margin-top: 0.25rem;">Supports JPG, PNG, WEBP</div>
+      </div>
+      <div id="image-preview" class="noir-preview-box d-none">
+        <img id="preview-img" src="#" alt="Preview" />
+      </div>
+    </div>
+
+    <!-- Pricing & Location -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div class="noir-form-group">
+        <label for="price" class="noir-label">Price per Night (&#8377;)</label>
+        <input 
+          type="number" 
+          id="price" 
+          name="listing[price]" 
+          placeholder="e.g. 12500" 
+          min="0" 
+          class="noir-input" 
+          required 
+        />
+        <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Enter a valid nightly price.</div>
+      </div>
+
+      <div class="noir-form-group">
+        <label for="country" class="noir-label">Country</label>
+        <input 
+          type="text" 
+          id="country" 
+          name="listing[country]" 
+          placeholder="e.g. Iceland, Japan, Norway, India" 
+          class="noir-input" 
+          required 
+        />
+        <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Specify country.</div>
+      </div>
+    </div>
+
+    <div class="noir-form-group">
+      <label for="location" class="noir-label">City / Region</label>
+      <input 
+        type="text" 
+        id="location" 
+        name="listing[location]" 
+        placeholder="e.g. Reykjavik, Kyoto, Lofoten, Ladakh" 
+        class="noir-input" 
+        required 
+      />
+      <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Specify location.</div>
+    </div>
+
+    <!-- Category Selector -->
+    <div class="noir-form-group">
+      <label class="noir-label">Select Category</label>
+      <div class="noir-category-grid">
         
         <div>
-             <label for="location" class="form-label">Location</label>
-            <input type="text" name="listing[location]" placeholder="enter location" class="form-control" required>
-            <div class="valid-feedback">
-                Location looks good!
-            </div>
-            <div class="invalid-feedback">
-            Enter a valid location.
-        </div><br>
+          <input type="radio" id="cat-trending" name="listing[category]" value="Trending" class="noir-radio-input" checked />
+          <label for="cat-trending" class="noir-radio-label">
+            <i class="fa-solid fa-fire"></i>
+            <span>Trending</span>
+          </label>
         </div>
+
         <div>
-            <div class="mb-3">
-    <label for="category" class="form-label">Category</label>
-    <select name="listing[category]" id="category" class="form-select" required>
-        <option value="" disabled selected>Choose a category...</option>
-        <option value="Trending">Trending</option>
-        <option value="Rooms">Rooms</option>
-        <option value="Iconic-Cities">Iconic Cities</option>
-        <option value="Mountains">Mountains</option>
-        <option value="Castles">Castles</option>
-        <option value="Pool">Pool</option>
-        <option value="Camping">Camping</option>
-        <option value="Farms">Farms</option>
-        <option value="Arctic">Arctic</option>
-        <option value="Beach">Beach</option>
-        <option value="Vineyards">Vineyards</option>
-        <option value="Kitchen">Kitchen</option>
-        <option value="GameHUb">GameHub</option>
-        <option value="Nature">Nature</option>
-        <option value="Business">Business</option>
-        <option value="Vacation">Vacation</option>
-        <option value="Music">Music</option>
-    </select>
-    <div class="invalid-feedback">Please select a category for your listing.</div>
-</div>
+          <input type="radio" id="cat-rooms" name="listing[category]" value="Rooms" class="noir-radio-input" />
+          <label for="cat-rooms" class="noir-radio-label">
+            <i class="fa-solid fa-bed"></i>
+            <span>Rooms</span>
+          </label>
         </div>
-        <button class=" add-btn mt-3">ADD</button>
-        <br><br><br>
-    </form>
-</body>
-</div>
+
+        <div>
+          <input type="radio" id="cat-cities" name="listing[category]" value="Iconic Cities" class="noir-radio-input" />
+          <label for="cat-cities" class="noir-radio-label">
+            <i class="fa-solid fa-mountain-city"></i>
+            <span>Iconic Cities</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-mountains" name="listing[category]" value="Mountains" class="noir-radio-input" />
+          <label for="cat-mountains" class="noir-radio-label">
+            <i class="fa-solid fa-mountain"></i>
+            <span>Mountains</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-castles" name="listing[category]" value="Castles" class="noir-radio-input" />
+          <label for="cat-castles" class="noir-radio-label">
+            <i class="fa-brands fa-fort-awesome"></i>
+            <span>Castles</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-pools" name="listing[category]" value="Pools" class="noir-radio-input" />
+          <label for="cat-pools" class="noir-radio-label">
+            <i class="fa-solid fa-person-swimming"></i>
+            <span>Pools</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-camping" name="listing[category]" value="Camping" class="noir-radio-input" />
+          <label for="cat-camping" class="noir-radio-label">
+            <i class="fa-solid fa-tent"></i>
+            <span>Camping</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-farms" name="listing[category]" value="Farms" class="noir-radio-input" />
+          <label for="cat-farms" class="noir-radio-label">
+            <i class="fa-solid fa-tractor"></i>
+            <span>Farms</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-arctic" name="listing[category]" value="Arctic" class="noir-radio-input" />
+          <label for="cat-arctic" class="noir-radio-label">
+            <i class="fa-solid fa-snowflake"></i>
+            <span>Arctic</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-beach" name="listing[category]" value="Beach" class="noir-radio-input" />
+          <label for="cat-beach" class="noir-radio-label">
+            <i class="fa-solid fa-umbrella-beach"></i>
+            <span>Beach</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-vineyards" name="listing[category]" value="Vineyards" class="noir-radio-input" />
+          <label for="cat-vineyards" class="noir-radio-label">
+            <i class="fa-solid fa-wine-bottle"></i>
+            <span>Vineyards</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-kitchen" name="listing[category]" value="Kitchen" class="noir-radio-input" />
+          <label for="cat-kitchen" class="noir-radio-label">
+            <i class="fa-solid fa-kitchen-set"></i>
+            <span>Kitchen</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-gamehub" name="listing[category]" value="GameHub" class="noir-radio-input" />
+          <label for="cat-gamehub" class="noir-radio-label">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>GameHub</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-nature" name="listing[category]" value="Nature" class="noir-radio-input" />
+          <label for="cat-nature" class="noir-radio-label">
+            <i class="fa-solid fa-leaf"></i>
+            <span>Nature</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-business" name="listing[category]" value="Business" class="noir-radio-input" />
+          <label for="cat-business" class="noir-radio-label">
+            <i class="fa-solid fa-briefcase"></i>
+            <span>Business</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-vacation" name="listing[category]" value="Vacation" class="noir-radio-input" />
+          <label for="cat-vacation" class="noir-radio-label">
+            <i class="fa-solid fa-umbrella"></i>
+            <span>Vacation</span>
+          </label>
+        </div>
+
+        <div>
+          <input type="radio" id="cat-music" name="listing[category]" value="Music" class="noir-radio-input" />
+          <label for="cat-music" class="noir-radio-label">
+            <i class="fa-solid fa-music"></i>
+            <span>Music</span>
+          </label>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+      <a href="/listings" class="btn-noir-outline">Cancel</a>
+      <button type="submit" class="btn-noir-primary" style="padding: 0.85rem 2rem;">
+        <i class="fa-solid fa-plus"></i>
+        <span>Publish Listing</span>
+      </button>
+    </div>
+
+  </form>
+
 </div>

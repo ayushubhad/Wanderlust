@@ -1,34 +1,83 @@
- <% layout("/layouts/boilerplate") %>
+<% layout("/layouts/boilerplate") %>
 
- <div class="row mt-3 ">
-    <div class="col-8 offset-2">
-        <h1>Sign Up On WanderLust</h1>
-        <form action="/signup" method="POST" novalidate class="needs-validation">
-             <div>
-         <label for="username" class="form-label">Username</label>
-        <input type="text" name="username" id="username" placeholder="enter username" class="form-control" required>
-        <div class="valid-feedback">
-            Username looks great!
-        </div>
-        <div class="invalid-feedback">
-                Enter a valid Username.
-            </div><br>
-       </div>
-       <div>
-        <div>
-         <label for="email" class="form-label">Email</label>
-        <input type="email" name="email" id="email" placeholder="enter email" class="form-control" required>
-        <br>
-       <div>
-        <div>
-        <div>
-         <label for="password" class="form-label">Password</label>
-        <input type="password" name="password" id="password" placeholder="enter password" class="form-control" required>
-        <br>
-       <div>
-        <button class="btn btn-success mb-3">Signup</button>
-        
-       </form>
-       
+<div class="noir-auth-wrapper">
+  <div class="noir-auth-card">
+    
+    <div class="noir-auth-header">
+      <div class="noir-brand-mark" style="margin: 0 auto; width: 3rem; height: 3rem; font-size: 1.25rem;">
+        <i class="fa-solid fa-user-plus"></i>
+      </div>
+      <h1 class="noir-auth-title">Create Account</h1>
+      <p class="noir-auth-sub">Join Wanderlust to discover and host bespoke architectural retreats.</p>
     </div>
- </div>
+
+    <form action="/signup" method="POST" novalidate class="needs-validation">
+      
+      <!-- Username -->
+      <div class="noir-form-group">
+        <label for="username" class="noir-label">Username</label>
+        <div class="noir-input-icon-group">
+          <i class="fa-solid fa-user noir-input-icon"></i>
+          <input 
+            type="text" 
+            name="username" 
+            id="username" 
+            placeholder="Choose username" 
+            class="noir-input noir-input-with-icon" 
+            required 
+            autocomplete="username"
+          />
+        </div>
+        <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Please choose a username.</div>
+      </div>
+
+      <!-- Email -->
+      <div class="noir-form-group">
+        <label for="email" class="noir-label">Email Address</label>
+        <div class="noir-input-icon-group">
+          <i class="fa-solid fa-envelope noir-input-icon"></i>
+          <input 
+            type="email" 
+            name="email" 
+            id="email" 
+            placeholder="name@example.com" 
+            class="noir-input noir-input-with-icon" 
+            required 
+            autocomplete="email"
+          />
+        </div>
+        <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Enter a valid email.</div>
+      </div>
+
+      <!-- Password -->
+      <div class="noir-form-group">
+        <label for="password" class="noir-label">Password</label>
+        <div class="noir-input-icon-group">
+          <i class="fa-solid fa-lock noir-input-icon"></i>
+          <input 
+            type="password" 
+            name="password" 
+            id="password" 
+            placeholder="Create password" 
+            class="noir-input noir-input-with-icon" 
+            required 
+            autocomplete="new-password"
+          />
+        </div>
+        <div class="invalid-feedback" style="color: var(--color-error); font-size: 0.8rem; margin-top: 0.35rem;">Enter a password.</div>
+      </div>
+
+      <!-- Submit CTA -->
+      <button type="submit" class="btn-noir-primary" style="width: 100%; padding: 0.85rem; font-size: 0.95rem; margin-top: 0.5rem;">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Create Account</span>
+      </button>
+
+    </form>
+
+    <div style="text-align: center; margin-top: 1.75rem; font-size: 0.85rem; color: var(--text-secondary);">
+      Already have an account? <a href="/login" style="color: var(--text-primary); font-weight: 700; text-decoration: underline;">Log in</a>
+    </div>
+
+  </div>
+</div>

@@ -1,52 +1,100 @@
-<style>
-  .btn-search{
-    background-color: #fe424d;
-    color : white;
-    border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-  }
-
-  .btn-search:hover{
-    background-color: #fe424d;
-    color : white;
+<header class="noir-header">
+  <div class="noir-nav-container">
     
-  }
-  .btn-search i{
-    display: inline;
-    margin-right: 0.5rem;
-  }
-  .search-input{
-    border-radius: 25px;
-    padding: 0.5rem 2rem 0.5rem 2rem ;
-  }
-</style>
+    <!-- Brand Logo -->
+    <a class="noir-brand" href="/listings" aria-label="Wanderlust">
+      <div class="noir-brand-mark">
+        <i class="fa-solid fa-compass"></i>
+      </div>
+      <span class="noir-brand-name">Wanderlust</span>
+    </a>
 
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav"> 
-      </div>
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
-      <input class="form-control me-2 search-input" type="search" placeholder="Search destinations" aria-label="Search"/>
-      <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-    </form>
-      </div>
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings">Explore</a>
-        <a class="nav-link" href="/listings/new">Add New Listings</a>
-        <% if(!currUser) {%>
-        <a class="nav-link" href="/signup"><b>Sign up</b></a>
-        <a class="nav-link" href="/login"><b>Login</b></a>
-        <% } %>
-        <% if(currUser) {%>
-        <a class="nav-link" href="/logout">Log out</a>
-       <% } %>
-      </div>
+    <!-- Center Search Bar -->
+    <div class="noir-search-container">
+      <form class="noir-search-bar" role="search" action="/listings" method="GET">
+        <input 
+          id="search-input" 
+          class="noir-search-input" 
+          type="search" 
+          name="q"
+          placeholder="Search by destination, country, or stay title..." 
+          aria-label="Search destinations"
+          autocomplete="off"
+        />
+        <button class="noir-search-btn" type="submit" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass" style="font-size: 0.85rem;"></i>
+        </button>
+      </form>
+
+      <!-- Real-time Live Auto-Suggest Results -->
+      <div id="search-suggestions" class="noir-search-dropdown d-none" role="listbox"></div>
     </div>
+
+    <!-- Right Actions -->
+    <div class="noir-nav-actions">
+      <a href="/listings/new" class="noir-host-link">
+        <i class="fa-solid fa-plus" style="font-size: 0.75rem;"></i>
+        <span>Add Listing</span>
+      </a>
+
+      <!-- User Menu -->
+      <div class="noir-user-wrapper">
+        <button id="user-menu-btn" class="noir-user-pill" type="button" aria-expanded="false" aria-haspopup="true">
+          <i class="fa-solid fa-bars" style="font-size: 0.8rem; color: var(--text-secondary);"></i>
+          <% if (currUser) { %>
+            <div class="noir-avatar-circle">
+              <%= currUser.username ? currUser.username.charAt(0).toUpperCase() : "U" %>
+            </div>
+          <% } else { %>
+            <div class="noir-avatar-circle" style="background: var(--bg-canvas);">
+              <i class="fa-solid fa-user" style="font-size: 0.75rem;"></i>
+            </div>
+          <% } %>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div id="user-dropdown-menu" class="noir-dropdown-card d-none">
+          <% if (currUser) { %>
+            <div class="noir-dropdown-header">
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Logged in as</div>
+              <div style="font-weight: 700; color: var(--text-primary); font-size: 0.9rem;">@<%= currUser.username %></div>
+            </div>
+            <a href="/listings" class="noir-dropdown-item">
+              <i class="fa-solid fa-compass"></i>
+              <span>Explore Escapes</span>
+            </a>
+            <a href="/listings/new" class="noir-dropdown-item">
+              <i class="fa-solid fa-plus"></i>
+              <span>Create New Listing</span>
+            </a>
+            <div class="noir-dropdown-divider"></div>
+            <a href="/logout" class="noir-dropdown-item" style="color: var(--color-error);">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <span>Log out</span>
+            </a>
+          <% } else { %>
+            <a href="/signup" class="noir-dropdown-item" style="font-weight: 700; color: var(--text-primary);">
+              <i class="fa-solid fa-user-plus"></i>
+              <span>Sign up</span>
+            </a>
+            <a href="/login" class="noir-dropdown-item">
+              <i class="fa-solid fa-right-to-bracket"></i>
+              <span>Log in</span>
+            </a>
+            <div class="noir-dropdown-divider"></div>
+            <a href="/listings" class="noir-dropdown-item">
+              <i class="fa-solid fa-compass"></i>
+              <span>Explore Escapes</span>
+            </a>
+            <a href="/listings/new" class="noir-dropdown-item">
+              <i class="fa-solid fa-plus"></i>
+              <span>Host your space</span>
+            </a>
+          <% } %>
+        </div>
+      </div>
+
+    </div>
+
   </div>
-</nav>
+</header>
